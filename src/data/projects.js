@@ -186,9 +186,13 @@ export const projects = [
     images: [portfolio1, portfolio2, portfolio3],
     links: [
       { label: "Code", url: "https://github.com/erica-niriantsoa/Portfolio" },
-      // 👉 Une fois le site en ligne sur Netlify, décommente cette ligne et
-      //    colle ton adresse. Le type "demo" affiche un bouton vert plein.
-      // { label: "Voir le site", url: "https://ton-adresse.netlify.app", type: "demo" },
+      // type: "demo" → bouton plein. C'est le seul projet avec une démo
+      // en ligne, autant qu'elle se remarque.
+      {
+        label: "Voir le site",
+        url: "https://niriantsoaerica.netlify.app",
+        type: "demo",
+      },
     ],
   },
 ];

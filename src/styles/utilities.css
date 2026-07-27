@@ -1,0 +1,48 @@
+/* ═══════════════════════════════════════════════════════════
+   CLASSES MAISON — réutilisables comme des classes Tailwind
+   Ex. : <span className="overline">SÉLECTION</span>
+   ═══════════════════════════════════════════════════════════ */
+
+/* Hauteur d'un écran, fiable sur téléphone.
+   Problème : 100vh (min-h-screen de Tailwind) compte la barre d'adresse
+   du navigateur mobile. Quand elle se masque au défilement, la hauteur
+   change et le contenu sursaute.
+   100dvh suit la hauteur réellement visible. La ligne 100vh reste juste
+   au-dessus, en secours pour les navigateurs qui ignorent dvh. */
+.min-h-screen-safe {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Petites capitales très espacées : la signature du style éditorial.
+   Utilisée pour les intitulés de section, les libellés, la barre du haut. */
+.overline {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.6875rem; /* 11px */
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* Variante un peu plus grande, pour les titres de section */
+.overline-lg {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.875rem; /* 14px */
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* Le très grand nom du Hero.
+   clamp() fait tout le travail du responsive : la taille suit la largeur
+   de l'écran, entre 2.75rem sur un petit téléphone et 7rem sur un grand
+   écran, sans aucun point de rupture à écrire.
+   Anton étant déjà condensée et grasse, on resserre l'interligne à 0.88
+   pour que deux lignes de nom forment un bloc compact. */
+.display-name {
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 11vw, 7rem);
+  line-height: 0.88;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}

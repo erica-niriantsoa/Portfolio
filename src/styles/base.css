@@ -1,0 +1,71 @@
+/* ═══════════════════════════════════════════════════════════
+   STYLES DE BASE — s'appliquent aux balises HTML directement
+   ═══════════════════════════════════════════════════════════ */
+
+html {
+  /* Défilement animé quand on clique sur un lien #ancre du menu */
+  scroll-behavior: smooth;
+  /* Empêche Safari iOS de grossir tout seul les textes quand on
+     tourne le téléphone en mode paysage */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  /* Lissage des polices */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Volontairement, les titres ne prennent PAS la police display :
+   Anton est extrêmement grasse et condensée, elle n'est belle qu'en
+   très grande taille. On l'applique au cas par cas avec la classe
+   font-display (le grand nom, les gros chiffres). */
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* ── Barre de défilement discrète (Chrome, Edge, Safari) ──── */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-paper);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-line);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-ink-faint);
+}
+
+/* ── Accessibilité : mouvement réduit ─────────────────────────
+   Certains utilisateurs (et beaucoup de téléphones en mode
+   économie d'énergie) demandent moins d'animations via un réglage
+   système. On respecte ce choix.
+   Côté Framer Motion, c'est <MotionConfig reducedMotion="user">
+   dans App.jsx qui s'en charge — le CSS ne peut pas arrêter les
+   animations pilotées en JavaScript. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

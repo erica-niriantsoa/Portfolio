@@ -1,0 +1,10 @@
+/* ═══════════════════════════════════════════════════════════
+   POINT D'ENTRÉE DES STYLES — importé par main.jsx
+   L'ordre compte : Tailwind d'abord, nos fichiers ensuite.
+   ═══════════════════════════════════════════════════════════ */
+
+@import "tailwindcss";
+
+@import "./theme.css"; /* couleurs et polices de la marque */
+@import "./base.css"; /* styles de base : body, titres, scrollbar */
+@import "./utilities.css"; /* classes maison réutilisables */

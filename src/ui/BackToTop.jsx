@@ -20,7 +20,10 @@ export default function BackToTop() {
       aria-label="Revenir en haut de la page"
       // pointer-events-none quand il est invisible : sinon on pourrait
       // cliquer dessus par accident alors qu'on ne le voit pas
-      className={`card fixed bottom-5 right-5 z-40 flex h-11 w-11 items-center justify-center !rounded-full text-ink-soft shadow-lift transition-all duration-300 ease-soft hover:text-accent ${
+      // bottom-20 sur mobile : la barre d'adresse de Safari occupe le bas
+      // de l'écran (~50px). À bottom-5, le bouton passait dessous, et il
+      // recouvrait le texte des cartes projets.
+      className={`card fixed bottom-20 right-4 z-40 flex h-11 w-11 items-center justify-center !rounded-full text-ink-soft shadow-lift transition-all duration-300 ease-soft hover:text-accent sm:bottom-5 sm:right-5 ${
         visible
           ? "translate-y-0 opacity-100"
           : "pointer-events-none translate-y-3 opacity-0"

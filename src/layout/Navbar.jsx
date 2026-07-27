@@ -20,7 +20,11 @@ export default function Navbar() {
     <header className="fixed inset-x-0 top-0 z-50">
       <div className="container-page pt-3 sm:pt-4">
         <nav
-          className={`flex items-center justify-between gap-4 rounded-lg border border-line bg-white/85 px-4 py-2.5 backdrop-blur-md transition-shadow duration-300 ease-soft sm:px-5 ${
+          // bg-white/95 et non /85 : à 85 % d'opacité, le texte qui passe
+          // dessous restait lisible au travers. Invisible sur un écran
+          // d'ordinateur, très gênant sur téléphone où le texte est plus
+          // gros. backdrop-blur-xl renforce encore la séparation.
+          className={`flex items-center justify-between gap-4 rounded-lg border border-line bg-white/95 px-4 py-2.5 backdrop-blur-xl transition-shadow duration-300 ease-soft sm:px-5 ${
             scrolled ? "shadow-lift" : "shadow-soft"
           }`}
         >

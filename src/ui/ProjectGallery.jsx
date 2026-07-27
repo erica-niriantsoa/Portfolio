@@ -36,9 +36,13 @@ export default function ProjectGallery({ images, title, zoom = true }) {
             : `Aperçu du projet ${title}`
         }
         loading="lazy"
-        // object-top : on cadre sur le haut de la capture, là où se
-        // trouvent l'en-tête et le contenu utile
-        className={`h-full w-full animate-[fade-in_400ms_ease-out] object-cover object-top transition-transform duration-500 ease-soft ${
+        // object-contain et non object-cover : les captures d'écran sont
+        // plus larges que le cadre 16/9 (jusqu'à 2,3 de ratio). Avec
+        // `cover`, un quart de l'interface était rogné sur les côtés —
+        // à peine visible sur grand écran, mais sur une carte de téléphone
+        // on ne voyait plus que la moitié gauche de la page.
+        // `contain` laisse deux fines bandes, et montre tout.
+        className={`h-full w-full animate-[fade-in_400ms_ease-out] object-contain transition-transform duration-500 ease-soft ${
           zoom ? "group-hover:scale-[1.03]" : ""
         }`}
       />
@@ -103,11 +107,13 @@ function GalleryArrow({ direction, onClick }) {
       // top-1/2 + -translate-y-1/2 : centrée verticalement sur l'image.
       // bg-white/85 + backdrop-blur : lisible sur une capture claire comme
       // sur une capture sombre.
-      className={`absolute top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-white/85 text-ink shadow-soft backdrop-blur-sm transition-all duration-300 ease-soft hover:bg-white hover:text-accent ${
-        isPrev ? "left-2" : "right-2"
+      // Plus petites sur mobile : sur une carte de téléphone, des flèches
+      // de 32px masquaient une grande partie de la capture.
+      className={`absolute top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-white/90 text-ink shadow-soft backdrop-blur-sm transition-all duration-300 ease-soft hover:bg-white hover:text-accent sm:h-8 sm:w-8 ${
+        isPrev ? "left-1.5 sm:left-2" : "right-1.5 sm:right-2"
       }`}
     >
-      <Icon className="h-4 w-4" strokeWidth={2} />
+      <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4" strokeWidth={2} />
     </button>
   );
 }

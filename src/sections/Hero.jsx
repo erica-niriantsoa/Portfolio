@@ -22,7 +22,10 @@ export default function Hero() {
       // et pb-32 est volontairement PLUS grand que pt : dans un conteneur
       // centré, un bas plus épais que le haut remonte le contenu. C'est ce
       // décalage qui place le bloc un peu au-dessus du centre optique.
-      className="min-h-screen-safe flex items-center pb-32 pt-28"
+      // pb plus faible sur mobile : en pleine hauteur d'écran avec les
+      // colonnes empilées, 8rem de marge basse laissaient une grande
+      // bande blanche entre la photo et la section suivante.
+      className="min-h-screen-safe flex items-center pb-16 pt-28 sm:pb-24 lg:pb-32"
     >
       <motion.div
         variants={staggerContainer}

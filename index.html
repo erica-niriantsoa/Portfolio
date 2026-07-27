@@ -6,14 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Couleur de la barre du navigateur sur mobile (Android/Chrome) -->
-    <meta name="theme-color" content="#f5f5f3" />
+    <meta name="theme-color" content="#fffdfe" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Anton : la police condensée très grasse du grand nom.
-         Inter : tout le reste du texte. -->
+    <!-- Trois polices, chacune avec un rôle précis :
+         · Playfair Display → le nom et les titres de section. Un serif à
+           empattements fins : c'est lui qui apporte l'élégance.
+         · Inter            → tout le texte courant, pour la lisibilité.
+         · JetBrains Mono   → les métadonnées techniques (dates, badges,
+           chiffres). C'est ce monospace qui garde le ton « développeuse »
+           malgré le serif. -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
 
@@ -25,6 +30,27 @@
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         FORMULAIRE CACHÉ — ne pas supprimer
+         ═══════════════════════════════════════════════════════════
+         Netlify repère les formulaires en analysant le HTML au moment du
+         déploiement. Or le vrai formulaire est construit par React dans
+         le navigateur : il n'existe pas dans le fichier HTML produit, et
+         Netlify ne le verrait donc jamais.
+         Cette copie cachée sert uniquement à le déclarer. Les noms des
+         champs doivent rester identiques à ceux de src/sections/Contact.jsx
+         ═══════════════════════════════════════════════════════════ -->
+    <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="contact" />
+      <input type="text" name="nom" />
+      <input type="text" name="prenom" />
+      <input type="email" name="email" />
+      <input type="tel" name="telephone" />
+      <textarea name="message"></textarea>
+      <input name="bot-field" />
+    </form>
+
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

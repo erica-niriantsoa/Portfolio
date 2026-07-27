@@ -11,6 +11,7 @@ export const navLinks = [
   { id: "projets", label: "Projets" },
   { id: "competences", label: "Compétences" },
   { id: "formation", label: "Formation" },
+  { id: "contact", label: "Contact" },
 ];
 
 // Juste la liste des identifiants. Calculée une seule fois ici (et non dans

@@ -1,86 +1,74 @@
-import { skills, softSkills, languages, stats, profile } from "../data";
+import { skills, softSkills, languages, profile } from "../data";
 import SectionHeading from "../ui/SectionHeading";
 import Reveal from "../ui/Reveal";
-import TechTile from "../ui/TechTile";
+import TechMarquee from "../ui/TechMarquee";
 import ProgressBar from "../ui/ProgressBar";
 import Tag from "../ui/Tag";
 import Quote from "../ui/Quote";
-import CountUp from "../ui/CountUp";
+
+// Toutes les technos à plat, puis coupées en deux rangées qui défilent en
+// sens opposés. Calculé une fois au chargement du module, pas à chaque
+// affichage : les données ne changent jamais en cours de route.
+const allTech = skills.flatMap((group) => group.items);
+const middle = Math.ceil(allTech.length / 2);
+const topRow = allTech.slice(0, middle);
+const bottomRow = allTech.slice(middle);
 
 // Section « Compétences ».
-// 1. les technologies, groupées par catégorie, avec leur logo officiel
-// 2. langues et soft skills à gauche, chiffres et citation à droite
-//
-// Le contenu se modifie dans data/skills.js, data/stats.js, data/profile.js
+// Le contenu se modifie dans data/skills.js et data/profile.js
 export default function Skills() {
   return (
-    <section id="competences" className="scroll-mt-16 border-t border-line">
-      <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24 lg:px-10 lg:py-32">
+    <section id="competences" className="section-y scroll-mt-16">
+      <div className="container-page">
         <SectionHeading
-          label="Compétences & outils"
-          description="Les technologies avec lesquelles je travaille au quotidien, du back-end à la cartographie."
+          label="02 — Compétences"
+          title="Compétences & outils"
+          description="Les outils que j'utilise vraiment : ceux que j'ai pratiqués sur les projets ci-dessus, pas seulement croisés en cours."
         />
+      </div>
 
-        {/* ══ Les technologies, catégorie par catégorie ══ */}
-        <div className="mt-14 flex flex-col gap-12">
-          {skills.map((group) => {
-            // L'icône de catégorie est un composant stocké dans data/skills.js.
-            // On la met dans une variable en majuscule, sinon JSX la prendrait
-            // pour une balise HTML ordinaire.
-            const CategoryIcon = group.icon;
+      {/* ══ Carrousel de logos ══
+          Hors du conteneur centré : le défilement doit partir d'un bord
+          de l'écran et sortir par l'autre. */}
+      <div className="mt-10 flex flex-col gap-3">
+        <TechMarquee items={topRow} duration={42} />
+        <TechMarquee items={bottomRow} duration={38} reverse />
+      </div>
 
-            return (
-              <div key={group.category}>
-                {/* Intitulé de catégorie, prolongé par un filet fin jusqu'au
-                    compteur de technos à droite */}
-                <h3 className="overline flex items-center gap-3 text-ink">
-                  <CategoryIcon
-                    className="h-4 w-4 shrink-0 text-accent"
-                    strokeWidth={1.5}
-                    aria-hidden="true"
-                  />
-                  <span className="shrink-0">{group.category}</span>
-                  <span className="h-px flex-1 bg-line" />
-                  <span className="shrink-0 text-ink-faint">
-                    {group.items.length}
-                  </span>
-                </h3>
+      <div className="container-page">
+        {/* Les catégories ne sont plus lisibles sur les tuiles du
+            carrousel : on les rappelle ici, avec le nombre de technos. */}
+        <ul className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
+          {skills.map((group) => (
+            <li
+              key={group.category}
+              className="mono-label flex items-center gap-2 text-ink-faint"
+            >
+              <span
+                className="h-1 w-1 shrink-0 rounded-full bg-accent"
+                aria-hidden="true"
+              />
+              {group.category}
+              <span className="text-ink-faint/60">{group.items.length}</span>
+            </li>
+          ))}
+        </ul>
 
-                {/* Le nombre de colonnes s'adapte tout seul à la largeur.
-                    96px de minimum → 3 tuiles de front sur un téléphone.
-                    min(96px, 100%) évite tout débordement sous 320px. */}
-                <ul className="mt-5 grid grid-cols-[repeat(auto-fill,minmax(min(96px,100%),1fr))] gap-3 sm:gap-4">
-                  {group.items.map((item, i) => (
-                    <TechTile
-                      key={item.name}
-                      name={item.name}
-                      icon={item.icon}
-                      index={i}
-                    />
-                  ))}
-                </ul>
-              </div>
-            );
-          })}
-        </div>
+        {/* ══ Deux cartes : langues, citation ══ */}
+        <div className="mt-10 grid gap-6 lg:grid-cols-2">
+          <Reveal className="h-full">
+            <div className="card h-full p-6">
+              <h3 className="text-base font-semibold text-ink">Langues</h3>
 
-        {/* ══ Langues + soft skills | chiffres + citation ══ */}
-        <div className="mt-20 grid gap-14 border-t border-line pt-16 lg:grid-cols-2 lg:gap-0 lg:divide-x lg:divide-line">
-          <div className="lg:pr-16">
-            <h3 className="overline-lg text-ink">Langues</h3>
-            <span className="mt-3 block h-[2px] w-10 bg-accent" />
-
-            <div className="mt-7 flex flex-col gap-6">
-              {languages.map((language) => (
-                <Reveal key={language.lang}>
-                  <div>
+              <div className="mt-6 flex flex-col gap-5">
+                {languages.map((language) => (
+                  <div key={language.lang}>
                     <div className="flex items-baseline justify-between gap-2">
-                      <span className="overline text-ink">{language.lang}</span>
-                      <span className="text-xs text-ink-soft">
-                        {language.level} ·{" "}
-                        <span className="font-semibold text-accent">
-                          {language.pct}%
-                        </span>
+                      <span className="text-sm font-medium text-ink">
+                        {language.lang}
+                      </span>
+                      <span className="mono-label text-ink-faint">
+                        {language.level}
                       </span>
                     </div>
                     <div className="mt-2.5">
@@ -91,55 +79,26 @@ export default function Skills() {
                       />
                     </div>
                   </div>
-                </Reveal>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.16} className="h-full">
+            <Quote text={profile.quote.text} author={profile.quote.author} />
+          </Reveal>
+        </div>
+
+        {/* ══ Soft skills ══ */}
+        <div className="mt-10">
+          <h3 className="text-base font-semibold text-ink">Soft skills</h3>
+          <Reveal>
+            <div className="mt-5 flex flex-wrap gap-1.5">
+              {softSkills.map((skill) => (
+                <Tag key={skill}>{skill}</Tag>
               ))}
             </div>
-
-            <h3 className="overline-lg mt-12 text-ink">Soft skills</h3>
-            <span className="mt-3 block h-[2px] w-10 bg-accent" />
-            <Reveal>
-              <div className="mt-6 flex flex-wrap gap-1.5">
-                {softSkills.map((skill) => (
-                  <Tag key={skill}>{skill}</Tag>
-                ))}
-              </div>
-            </Reveal>
-          </div>
-
-          <div className="lg:pl-16">
-            <h3 className="overline-lg text-ink">En chiffres</h3>
-            <span className="mt-3 block h-[2px] w-10 bg-accent" />
-
-            {/* Les chiffres défilent depuis 0 quand ils arrivent à l'écran */}
-            <Reveal>
-              <dl className="mt-7 grid grid-cols-3">
-                {stats.map((stat, i) => (
-                  <div
-                    key={stat.label}
-                    className={`px-4 first:pl-0 last:pr-0 ${
-                      i > 0 ? "border-l border-line" : ""
-                    }`}
-                  >
-                    <dd className="font-display text-3xl leading-none text-ink sm:text-4xl">
-                      <CountUp value={stat.value} />
-                    </dd>
-                    <dt className="overline mt-2.5 text-ink-faint">
-                      {stat.label}
-                    </dt>
-                  </div>
-                ))}
-              </dl>
-            </Reveal>
-
-            <Reveal delay={0.15}>
-              <div className="mt-10">
-                <Quote
-                  text={profile.quote.text}
-                  author={profile.quote.author}
-                />
-              </div>
-            </Reveal>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

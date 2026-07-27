@@ -2,11 +2,13 @@ import { MotionConfig } from "framer-motion";
 
 import Navbar from "./layout/Navbar";
 import Footer from "./layout/Footer";
+import BackToTop from "./ui/BackToTop";
 
 import Hero from "./sections/Hero";
 import Projects from "./sections/Projects";
 import Skills from "./sections/Skills";
 import Education from "./sections/Education";
+import Contact from "./sections/Contact";
 
 // Assemble la page. Pour changer l'ordre des sections, il suffit de
 // déplacer les lignes ci-dessous — et de mettre à jour data/navigation.js
@@ -23,10 +25,10 @@ export default function App() {
         <Projects />
         <Skills />
         <Education />
+        <Contact />
       </main>
-      {/* Il n'y a plus de section Contact : les liens (LinkedIn, GitHub,
-          email, CV) sont rassemblés dans le pied de page. */}
       <Footer />
+      <BackToTop />
     </MotionConfig>
   );
 }

@@ -4,24 +4,27 @@
 
 export const profile = {
   name: "Niriantsoa Erica",
-  initials: "EN", // affiché comme logo dans la barre de navigation
-  monogram: "E/N", // version avec barre oblique, en haut de page
-  title: "Développeuse Full-Stack",
+  // Logo de la barre de navigation. Affiché en majuscules et suivi d'un
+  // point coloré, à la manière d'une signature.
+  logo: "Erica",
+  title: "Développeuse",
   subtitle:
     "Étudiante en 3ème année · Licence Informatique · IT University",
-
-  // Les deux lignes en petites capitales tout en haut à gauche de la page.
-  // Garde-les courtes : elles sont très espacées, donc vite trop larges.
-  tagline: ["Développement web", "back-end & API REST"],
 
   // Bandeau au-dessus du nom. L'icône qui l'accompagne est choisie dans
   // sections/Hero.jsx (GraduationCap), pas ici : on ne met pas d'emoji
   // dans le texte, sinon il ne s'affiche pas pareil selon les appareils.
   badge: "Recherche de stage · Disponible immédiatement",
 
-  // Paragraphe de présentation, affiché sous le grand nom
+  // Petite phrase d'accueil, juste au-dessus du grand nom.
+  // 👉 Mets une chaîne vide ("") pour la faire disparaître complètement.
+  greeting: "Bonjour, je suis",
+
+  // Paragraphe de présentation, affiché sous le grand nom.
+  // Écrit à la première personne et sans jargon inutile : c'est la
+  // première chose qu'on lit, autant qu'on y entende quelqu'un.
   about:
-    "Étudiante en 3ème année de Licence en Informatique à IT University, spécialisée en développement back-end (Java, Spring Boot, PHP), conception et intégration d'API REST ainsi que gestion de bases de données. Forte de plusieurs projets concrets, je recherche un stage de fin d'études pour contribuer à des projets numériques ambitieux.",
+    "Développeuse et étudiante en 3ème année de Licence en Informatique à IT University, je construis mon expertise à travers des projets concrets en développement web. Rigoureuse, curieuse et passionnée par les solutions numériques, je suis à la recherche d'un stage de fin d'études et serais ravie de rejoindre une équipe dynamique pour contribuer à des projets ambitieux.",
 
   // Citation affichée à côté des chiffres.
   // 👉 Change-la pour une phrase qui te correspond — c'est toi qu'on lit.
@@ -32,7 +35,7 @@ export const profile = {
 
   email: "erica.ny.riantsoa@gmail.com",
   phone: "+261 34 37 66 599",
-  location: "Antananarivo, Madagascar",
+  location: "Ambatofotsy, Antananarivo",
 
   // Lien vers ton CV : le PDF doit être dans /public
   cvUrl: "/CV-Erica-Niriantsoa.pdf",

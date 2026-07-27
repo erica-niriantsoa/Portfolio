@@ -1,32 +1,64 @@
 /* ═══════════════════════════════════════════════════════════
-   THÈME — 👉 MODIFIE LES COULEURS ET LES POLICES ICI
+   THÈME — 👉 LE SYSTÈME DE DESIGN EST ICI
    ═══════════════════════════════════════════════════════════
+   Tout le site pioche dans ces valeurs et rien d'autre : une
+   seule palette, trois rayons, trois ombres, une courbe
+   d'animation. C'est ce qui garantit la cohérence visuelle —
+   si tu changes une valeur ici, tout le site suit.
+
    Le bloc @theme est propre à Tailwind v4 : chaque variable
-   déclarée ici génère automatiquement les classes utilitaires
-   correspondantes.
-   Exemple : --color-accent  →  text-accent, bg-accent, border-accent…
+   déclarée génère la classe utilitaire correspondante.
+   Exemple : --color-accent → text-accent, bg-accent, border-accent
    ═══════════════════════════════════════════════════════════ */
 
 @theme {
-  /* ── Fonds ──────────────────────────────────────────────── */
-  --color-paper: #f5f5f3; /* blanc cassé chaud : fond de la page */
-  --color-paper-2: #ebebe8; /* un ton plus foncé : sections alternées */
+  /* ── Fonds : neutres très légèrement rosés ────────────────
+     Assez neutres pour rester sobres, assez chauds pour
+     s'accorder au rose de l'accent (des gris franchement froids
+     jureraient avec lui). */
+  --color-surface: #faf8f9; /* sections alternées */
+  --color-surface-2: #f4f0f2; /* survols, fonds de badge */
 
   /* ── Texte ──────────────────────────────────────────────── */
-  --color-ink: #1a1a1a; /* noir doux : titres et texte courant */
-  --color-ink-soft: #6b6b6b; /* texte secondaire */
-  --color-ink-faint: #9a9a97; /* numéros, mentions discrètes */
+  --color-ink: #191419; /* presque noir, nuance prune */
+  --color-ink-soft: #635a61; /* texte secondaire */
+  --color-ink-faint: #9a8f96; /* mentions discrètes, numéros */
 
-  /* ── Accent vert ────────────────────────────────────────── */
-  --color-accent: #2d7a5f; /* vert profond : intitulés, traits, barres */
-  --color-accent-light: #3d9b78; /* vert clair : survols */
+  /* ── Accent : rose prune ─────────────────────────────────
+     Profond et désaturé, pas un rose bonbon : c'est ce qui le
+     garde élégant plutôt que « girly ». */
+  --color-accent: #9d4a6a;
+  --color-accent-dark: #7d3a54; /* survol des boutons pleins */
+  --color-accent-soft: #fbf0f4; /* fond très clair d'accent */
 
   /* ── Traits ─────────────────────────────────────────────── */
-  --color-line: #d9d9d4; /* filets fins entre les blocs */
+  --color-line: #e8e1e4; /* filets fins, bordures de cartes */
+  --color-line-strong: #d8ccd2; /* séparateurs plus marqués */
 
-  /* ── Polices — chargées dans index.html (Google Fonts) ──── */
-  /* Anton n'existe qu'en une seule graisse (400), déjà très grasse.
-     Arial Narrow sert de secours le temps qu'Anton se charge. */
-  --font-display: "Anton", "Arial Narrow", Impact, sans-serif;
+  /* ── Rayons de bordure : TROIS valeurs, pas plus ──────────
+     Volontairement modérés : rien n'est complètement arrondi
+     à part la photo et les points de statut. */
+  --radius-sm: 0.25rem; /*  4px — badges de technos */
+  --radius-md: 0.5rem; /*  8px — boutons, champs de formulaire */
+  --radius-lg: 0.875rem; /* 14px — cartes */
+
+  /* ── Ombres : deux niveaux, superposées et très peu opaques.
+     Une ombre moderne, c'est deux couches (une nette et proche,
+     une large et diffuse) à faible opacité — jamais un halo gris.
+     Elles sont teintées prune plutôt que gris neutre : une ombre
+     colorée dans la teinte du site paraît plus naturelle. */
+  --shadow-soft: 0 1px 2px rgb(25 20 25 / 0.04), 0 1px 3px rgb(25 20 25 / 0.05);
+  --shadow-lift: 0 2px 4px rgb(25 20 25 / 0.04),
+    0 12px 24px -6px rgb(25 20 25 / 0.1);
+
+  /* ── Animation : une seule courbe pour tout le site ──────── */
+  --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ── Polices — chargées dans index.html ───────────────────
+     display → le nom et les titres de section (serif élégant)
+     sans    → tout le texte courant
+     mono    → dates, badges, chiffres */
+  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
 }

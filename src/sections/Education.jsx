@@ -1,59 +1,62 @@
+import { GraduationCap } from "lucide-react";
 import { education } from "../data";
 import SectionHeading from "../ui/SectionHeading";
 import Reveal from "../ui/Reveal";
 import Tag from "../ui/Tag";
 
-// Section « Formation » : frise verticale.
+// Section « Formation », présentée en cartes plutôt qu'en frise :
+// même structure que les cartes projets, donc même lecture.
 // Le contenu se modifie dans data/education.js
 export default function Education() {
   return (
     <section
       id="formation"
-      className="scroll-mt-16 border-t border-line bg-paper-2/40"
+      className="section-y scroll-mt-16 border-y border-line bg-surface"
     >
-      <div className="mx-auto max-w-6xl px-6 py-16 lg:px-10 lg:py-24">
-        <div className="grid gap-12 lg:grid-cols-[1fr_2.2fr] lg:gap-16">
-          <div className="lg:sticky lg:top-28 lg:self-start">
-            <SectionHeading
-              label="Formation"
-              description="Mon parcours académique, du baccalauréat à la licence en cours."
-            />
-          </div>
+      <div className="container-page">
+        <SectionHeading
+          label="03 — Formation"
+          title="Mon parcours"
+          description="Où j'ai appris, et ce que j'y ai construit."
+        />
 
-          {/* La bordure gauche de la liste dessine le trait de la frise */}
-          <ol className="flex flex-col gap-12 border-l border-line pl-6">
-            {education.map((step, i) => (
-              <Reveal key={step.degree} delay={i * 0.1}>
-                <li className="relative">
-                  {/* Le carré sur le trait. Décalage : le bord gauche du
-                      <li> est à 1.5rem (pl-6) + 1px (border-l) du bord de
-                      la liste ; il faut reculer d'autant, puis de la moitié
-                      du carré (3px), moins le milieu du trait. → 27px */}
-                  <span
-                    aria-hidden="true"
-                    className="absolute -left-[27px] top-1.5 h-1.5 w-1.5 bg-accent"
-                  />
-
+        <div className="mt-14 grid gap-6 lg:grid-cols-2">
+          {education.map((step, i) => (
+            <Reveal key={step.degree} delay={i * 0.08} className="h-full">
+              <article className="card card-hover flex h-full flex-col p-6">
+                <div className="flex items-start justify-between gap-4">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-line bg-white">
+                    <GraduationCap
+                      className="h-4 w-4 text-accent"
+                      strokeWidth={1.75}
+                    />
+                  </span>
                   {/* La période est facultative dans data/education.js */}
                   {step.period && (
-                    <p className="overline text-accent">{step.period}</p>
+                    <span className="mono-label text-ink-faint">
+                      {step.period}
+                    </span>
                   )}
+                </div>
 
-                  <h3 className="overline-lg mt-2 text-ink">{step.degree}</h3>
-                  <p className="mt-2 text-sm text-ink-soft">{step.school}</p>
+                <h3 className="mt-5 text-base font-semibold leading-snug text-ink">
+                  {step.degree}
+                </h3>
+                <p className="mt-2 flex-1 text-sm text-ink-soft">
+                  {step.school}
+                </p>
 
-                  {/* Les matières, seulement si la liste n'est pas vide */}
-                  {step.details.length > 0 && (
-                    <div className="mt-4 flex flex-wrap gap-1.5">
-                      {step.details.map((detail) => (
-                        <Tag key={detail}>{detail}</Tag>
-                      ))}
-                    </div>
-                  )}
-                </li>
-              </Reveal>
-            ))}
-          </ol>
+                {/* Les matières, seulement si la liste n'est pas vide */}
+                {step.details.length > 0 && (
+                  <div className="mt-5 flex flex-wrap gap-1.5 border-t border-line pt-5">
+                    {step.details.map((detail) => (
+                      <Tag key={detail}>{detail}</Tag>
+                    ))}
+                  </div>
+                )}
+              </article>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>

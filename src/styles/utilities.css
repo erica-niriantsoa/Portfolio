@@ -1,9 +1,114 @@
 /* ═══════════════════════════════════════════════════════════
-   CLASSES MAISON — réutilisables comme des classes Tailwind
-   Ex. : <span className="overline">SÉLECTION</span>
+   CLASSES MAISON — le vocabulaire visuel du site
+   ═══════════════════════════════════════════════════════════
+   Ces classes existent pour garantir la cohérence : une seule
+   définition de « carte », de « rythme de section », de « titre ».
+   Utilise-les au lieu de recomposer les mêmes classes Tailwind
+   à la main dans chaque fichier.
    ═══════════════════════════════════════════════════════════ */
 
-/* Hauteur d'un écran, fiable sur téléphone.
+/* ── Rythme vertical ────────────────────────────────────────
+   L'espace se calcule sur la HAUTEUR de l'écran (vh) et non sur une
+   valeur fixe : sur un grand écran la respiration augmente, sur un
+   portable elle se resserre pour que la section tienne à l'écran.
+   Le minimum garde de l'air sur mobile, le maximum évite le vide. */
+.section-y {
+  padding-block: clamp(3rem, 6vh, 5.5rem);
+}
+
+/* Largeur de contenu et marges latérales, identiques partout.
+   90rem (1440px) au lieu de 72rem : sur un écran large, le contenu
+   occupe vraiment la place au lieu de laisser deux grandes marges
+   vides de chaque côté.
+   Les marges latérales grandissent avec l'écran (vw) pour que le
+   texte ne colle jamais au bord. */
+/* UN SEUL conteneur pour tout le site, Profil compris.
+   Il a existé un temps un `.container-wide` sans plafond pour le Profil :
+   il écartait trop le texte de la photo, et désalignait le Profil du reste
+   du site. Une seule largeur garantit que chaque section commence et finit
+   exactement au même endroit — c'est ce qui donne l'impression d'un site
+   tenu, plutôt que d'un empilement de blocs de largeurs différentes. */
+.container-page {
+  margin-inline: auto;
+  max-width: 90rem;
+  padding-inline: clamp(1.25rem, 4vw, 4rem);
+}
+
+/* ── Carte ──────────────────────────────────────────────────
+   Fond blanc, filet fin, rayon moyen, ombre à peine perceptible.
+   La variante .card-hover ajoute la réaction au survol. */
+.card {
+  background: #ffffff;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+
+.card-hover {
+  transition:
+    box-shadow 300ms var(--ease-soft),
+    border-color 300ms var(--ease-soft),
+    transform 300ms var(--ease-soft);
+}
+.card-hover:hover {
+  border-color: var(--color-line-strong);
+  box-shadow: var(--shadow-lift);
+  transform: translateY(-3px);
+}
+
+/* ── Typographie ────────────────────────────────────────────
+   Le grand nom du Hero, en serif Playfair Display.
+   Un serif se resserre beaucoup moins qu'un sans : -0.02em suffit
+   là où Inter demandait -0.045em. Trop resserrer collerait les
+   empattements les uns aux autres.
+   clamp() gère seul le responsive — la taille suit la largeur de
+   l'écran entre 2.75rem et 5.25rem, sans point de rupture à écrire. */
+.display-title {
+  font-family: var(--font-display);
+  /* Le plafond reste au-dessus du terme en vw pour que ce soit ce dernier
+     qui gouverne sur les grands écrans : le nom grandit alors avec l'écran
+     au lieu de rester figé. */
+  font-size: clamp(2.5rem, 5.25vw, 6.25rem);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+}
+
+/* Titre de section, même serif.
+   clamp() remplace les paliers : la taille suit la largeur en continu,
+   donc plus de saut brusque à 640px. */
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3vw, 3rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+
+/* Étiquette technique en monospace : dates, catégories, numéros de
+   section. C'est ce détail qui signale « développeuse » sans avoir
+   besoin de le dire. */
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Petit libellé en capitales espacées — réservé aux étiquettes de
+   formulaire et aux mentions du pied de page. Utilisé avec parcimonie :
+   employé partout, il donne un côté magazine. */
+.overline {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* ── Divers ─────────────────────────────────────────────────
+   Hauteur d'un écran, fiable sur téléphone.
    Problème : 100vh (min-h-screen de Tailwind) compte la barre d'adresse
    du navigateur mobile. Quand elle se masque au défilement, la hauteur
    change et le contenu sursaute.
@@ -14,35 +119,66 @@
   min-height: 100dvh;
 }
 
-/* Petites capitales très espacées : la signature du style éditorial.
-   Utilisée pour les intitulés de section, les libellés, la barre du haut. */
-.overline {
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  font-size: 0.6875rem; /* 11px */
-  font-weight: 600;
-  line-height: 1.5;
+/* Apparition en fondu — utilisée quand on change de capture dans la
+   galerie d'un projet (ui/ProjectGallery.jsx) */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-/* Variante un peu plus grande, pour les titres de section */
-.overline-lg {
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  font-size: 0.875rem; /* 14px */
-  font-weight: 700;
-  line-height: 1.4;
+/* ── Carrousel infini de logos ──────────────────────────────────
+   Principe : la piste contient DEUX copies identiques de la liste.
+   On la fait glisser de 0 à -50 % de sa largeur : quand la première
+   copie a fini de sortir à gauche, la seconde occupe exactement sa
+   place de départ. Le saut au retour à 0 est donc invisible.
+   C'est pour ça que TechMarquee.jsx duplique les logos. */
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
-/* Le très grand nom du Hero.
-   clamp() fait tout le travail du responsive : la taille suit la largeur
-   de l'écran, entre 2.75rem sur un petit téléphone et 7rem sur un grand
-   écran, sans aucun point de rupture à écrire.
-   Anton étant déjà condensée et grasse, on resserre l'interligne à 0.88
-   pour que deux lignes de nom forment un bloc compact. */
-.display-name {
-  font-family: var(--font-display);
-  font-size: clamp(2.75rem, 11vw, 7rem);
-  line-height: 0.88;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
+.marquee {
+  /* Les logos s'effacent en dégradé sur les bords au lieu d'être
+     coupés net par le bord de l'écran */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+}
+
+.marquee-track {
+  width: max-content;
+  animation: marquee-left var(--marquee-duration, 45s) linear infinite;
+  /* Prévient le navigateur qu'on anime la position : il prépare
+     l'accélération matérielle, le défilement reste fluide */
+  will-change: transform;
+}
+
+/* Sens inverse, pour la deuxième rangée */
+.marquee-track-reverse {
+  animation-direction: reverse;
+}
+
+/* Au survol, le défilement se met en pause : on peut lire un logo
+   ou cliquer dessus sans courir après */
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
 }

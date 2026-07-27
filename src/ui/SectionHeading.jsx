@@ -1,33 +1,42 @@
 import Reveal from "./Reveal";
 
 /**
- * Intitulé de section, style éditorial : petites capitales espacées,
- * un court trait vert dessous, puis une phrase d'explication.
- * Aligné à gauche — dans ce design il occupe sa propre colonne.
+ * Intitulé de section, en trois niveaux de hiérarchie :
+ *   1. une étiquette numérotée en monospace, en vert
+ *   2. le titre, gros et resserré
+ *   3. une phrase d'explication, en gris
  *
- * @param label        intitulé en capitales, ex. "Projets sélectionnés"
- * @param description  phrase sous le trait (facultatif)
- * @param dark         true quand la section est sur fond sombre
+ * Cette hiérarchie est la même partout — c'est elle qui fait que le
+ * visiteur sait toujours où il en est dans la page.
+ *
+ * @param label        étiquette mono, ex. "01 — Projets"
+ * @param title        titre de la section
+ * @param description  phrase sous le titre (facultatif)
+ * @param center       true → tout centré (sinon aligné à gauche)
  */
-export default function SectionHeading({ label, description, dark = false }) {
+export default function SectionHeading({
+  label,
+  title,
+  description,
+  center = false,
+}) {
   return (
     <Reveal>
-      <h2 className={`overline-lg ${dark ? "text-white" : "text-ink"}`}>
-        {label}
-      </h2>
+      <div className={center ? "text-center" : ""}>
+        {label && <p className="mono-label text-accent">{label}</p>}
 
-      {/* Le court trait vert : la signature visuelle du design */}
-      <span className="mt-3 block h-[2px] w-10 bg-accent" />
+        <h2 className="section-title mt-3.5 text-ink">{title}</h2>
 
-      {description && (
-        <p
-          className={`mt-5 max-w-xs text-sm leading-relaxed ${
-            dark ? "text-ink-faint" : "text-ink-soft"
-          }`}
-        >
-          {description}
-        </p>
-      )}
+        {description && (
+          <p
+            className={`mt-4 max-w-xl text-[0.9375rem] leading-relaxed text-ink-soft ${
+              center ? "mx-auto" : ""
+            }`}
+          >
+            {description}
+          </p>
+        )}
+      </div>
     </Reveal>
   );
 }

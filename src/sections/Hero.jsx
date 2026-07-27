@@ -1,12 +1,13 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Mail } from "lucide-react";
+import { ArrowRight, Download } from "lucide-react";
 import { profile } from "../data";
 import { staggerContainer, fadeUpItem } from "../lib/motion";
-// Pour changer ta photo : remplace ce fichier dans src/assets/
-import photo from "../assets/photo.png";
+import Button from "../ui/Button";
+// 👉 Pour changer ta photo : remplace src/assets/photo.png, puis relance
+//    node scripts/optimize-screenshots.mjs  (qui régénère le .webp)
+import photo from "../assets/photo.webp";
 
-// « Niriantsoa Erica » → ["Niriantsoa", "Erica"] : une ligne par mot,
-// pour que le grand nom forme un bloc de deux lignes.
+// « Niriantsoa Erica » → ["Niriantsoa", "Erica"] : une ligne par mot.
 const nameLines = profile.name.split(" ");
 
 export default function Hero() {
@@ -15,42 +16,44 @@ export default function Hero() {
       id="profil"
       // min-h-screen-safe : classe maison qui évite que le contenu sursaute
       // quand la barre d'adresse du navigateur mobile se masque.
-      // pt-28 : laisse la place à la barre de navigation fixe.
-      className="min-h-screen-safe flex flex-col justify-center px-6 pb-20 pt-28 lg:px-10"
+      // pt-28 laisse la place à la barre de navigation flottante (~62px),
+      // et pb-32 est volontairement PLUS grand que pt : dans un conteneur
+      // centré, un bas plus épais que le haut remonte le contenu. C'est ce
+      // décalage qui place le bloc un peu au-dessus du centre optique.
+      className="min-h-screen-safe flex items-center pb-32 pt-28"
     >
       <motion.div
         variants={staggerContainer}
         initial="hidden"
         animate="show"
-        className="mx-auto w-full max-w-6xl"
+        // Le même conteneur que toutes les autres sections : le texte part
+        // donc exactement du même bord gauche que « Projets sélectionnés »
+        // ou « Compétences & outils », et la photo finit au même bord droit.
+        //
+        // ⚠️ w-full est INDISPENSABLE ici : la <section> parente est en
+        // `flex`, et un élément de flex se dimensionne sur son contenu, pas
+        // sur la place disponible. Sans w-full, le conteneur restait plus
+        // étroit que l'écran et son `margin-inline: auto` le centrait —
+        // la photo se retrouvait au bord droit d'un bloc centré, et non au
+        // bord droit de la page.
+        className="container-page w-full"
       >
-        {/* ── Bandeau du haut : accroche à gauche, année à droite ── */}
-        <motion.div
-          variants={fadeUpItem}
-          className="flex items-start justify-between gap-6 pb-12 sm:pb-16"
-        >
-          <p className="overline text-ink-soft">
-            {profile.tagline.map((line) => (
-              <span key={line} className="block">
-                {line}
-              </span>
-            ))}
-          </p>
-          <p className="overline shrink-0 text-right text-ink-soft">
-            <span className="block">Portfolio</span>
-            <span className="block">{new Date().getFullYear()}</span>
-          </p>
-        </motion.div>
+        {/* `1fr auto` : la colonne photo se réduit exactement à la largeur
+            de la photo, et le texte prend TOUT le reste. Avec un ratio
+            classique (1.75fr 1fr), la colonne de droite restait plus large
+            que la photo et laissait un vide à sa gauche.
 
-        {/* ── Nom + photo ──
-            Une seule colonne sur mobile et tablette, deux à partir de lg.
-            La colonne du nom est 1,4 fois plus large que celle de la photo. */}
-        <div className="grid items-center gap-14 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
-          <div>
-            {/* Badge de disponibilité, avec un point vert qui pulse */}
+            Le passage en deux colonnes se fait dès md (768px) et non lg
+            (1024px) : sur une fenêtre non maximisée ou avec un zoom du
+            navigateur, la largeur passe souvent sous 1024px et tout
+            s'empilait alors verticalement. */}
+        <div className="grid items-center gap-14 md:grid-cols-[1fr_auto] md:gap-10 lg:gap-16">
+          {/* Colonne de gauche : tout le texte, aligné au bord gauche */}
+          <div className="text-left md:justify-self-start">
+            {/* Badge de disponibilité : point vert qui pulse + texte mono */}
             <motion.p
               variants={fadeUpItem}
-              className="overline mb-5 inline-flex items-center gap-2.5 text-accent"
+              className="mono-label inline-flex items-center gap-2.5 rounded-md border border-line bg-surface px-3 py-1.5 text-ink-soft"
             >
               <span className="relative flex h-1.5 w-1.5 shrink-0">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
@@ -59,9 +62,24 @@ export default function Hero() {
               {profile.badge}
             </motion.p>
 
-            {/* .display-name : Anton, et clamp() gère seul la taille selon
-                la largeur de l'écran (voir styles/utilities.css) */}
-            <motion.h1 variants={fadeUpItem} className="display-name text-ink">
+            {/* Phrase d'accueil, en serif italique pour la distinguer du
+                nom sans lui voler la vedette. Disparaît si le champ
+                `greeting` est vide dans data/profile.js */}
+            {profile.greeting && (
+              <motion.p
+                variants={fadeUpItem}
+                className="mt-6 font-display text-xl italic text-ink-soft sm:text-2xl"
+              >
+                {profile.greeting}
+              </motion.p>
+            )}
+
+            {/* .display-title : serif Playfair, taille gérée par clamp()
+                (voir styles/utilities.css) */}
+            <motion.h1
+              variants={fadeUpItem}
+              className="display-title mt-1.5 text-ink"
+            >
               {nameLines.map((line) => (
                 <span key={line} className="block">
                   {line}
@@ -71,69 +89,61 @@ export default function Hero() {
 
             <motion.p
               variants={fadeUpItem}
-              className="overline-lg mt-6 text-accent"
+              className="mt-6 text-xl font-medium text-accent sm:text-2xl"
             >
               {profile.title}
             </motion.p>
 
             <motion.p
               variants={fadeUpItem}
-              className="mt-6 max-w-md text-sm leading-relaxed text-ink-soft sm:text-base"
+              // max-w-2xl avec un texte de 18px, soit ~84 caractères par
+              // ligne. C'est au-delà des ~75 habituellement recommandés,
+              // et c'est un choix assumé : élargir ce paragraphe est ce qui
+              // réduit le plus l'espace vide entre le texte et la photo.
+              // Le compromis tient parce que le paragraphe est court —
+              // 4 lignes. Ne pas reprendre cette largeur pour un texte long.
+              className="mt-6 max-w-2xl text-base leading-relaxed text-ink-soft"
             >
               {profile.about}
             </motion.p>
 
-            {/* Le court trait vert, motif récurrent du design */}
-            <motion.span
-              variants={fadeUpItem}
-              className="mt-8 block h-[2px] w-16 bg-accent"
-            />
-
-            {/* Liens d'action en petites capitales : dans ce design on
-                évite les gros boutons pleins. py-3 garde une zone
-                tactile confortable au doigt. */}
             <motion.div
               variants={fadeUpItem}
-              className="mt-6 flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-8"
+              className="mt-9 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center"
             >
-              <a
-                href="#projets"
-                className="group overline inline-flex items-center gap-2 py-3 text-ink transition-colors hover:text-accent"
-              >
+              <Button href="#projets" iconEnd={ArrowRight}>
                 Voir mes projets
-                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </a>
-              <a
-                href={`mailto:${profile.email}`}
-                className="group overline inline-flex items-center gap-2 py-3 text-ink-soft transition-colors hover:text-accent"
+              </Button>
+              <Button
+                href={profile.cvUrl}
+                download
+                variant="secondary"
+                icon={Download}
               >
-                <Mail className="h-4 w-4" strokeWidth={1.5} />
-                M'écrire
-              </a>
+                Télécharger mon CV
+              </Button>
             </motion.div>
           </div>
 
-          {/* ── Photo : cadre décalé + profondeur ──
-              `group` sur le conteneur : le survol de la photo anime aussi
-              le cadre vert qui se rapproche derrière. */}
+          {/* ── Photo ──
+              Cadre sobre : filet fin, rayon moyen, ombre en deux couches
+              pour la profondeur. Pas de forme décorative derrière.
+              `group` : le survol de l'ensemble anime la photo. */}
           <motion.div
             variants={fadeUpItem}
-            className="group relative mx-auto w-fit lg:justify-self-end"
+            className="group relative mx-auto w-fit md:justify-self-end"
           >
-            {/* Cadre vert décalé en diagonale : c'est ce décalage qui donne
-                l'impression de profondeur. Il se rapproche au survol. */}
-            <span
-              aria-hidden="true"
-              className="absolute inset-0 translate-x-3 translate-y-3 rounded-2xl border border-accent transition-transform duration-500 ease-out group-hover:translate-x-1.5 group-hover:translate-y-1.5"
-            />
-
-            {/* aspect-[4/5] : format portrait, quelle que soit la largeur */}
-            <div className="relative aspect-[4/5] w-56 overflow-hidden rounded-2xl bg-paper-2 shadow-[0_18px_40px_-18px_rgb(0_0_0/0.28)] ring-1 ring-line sm:w-64 lg:w-72">
-              {/* Noir et blanc par défaut, couleur et léger zoom au survol */}
+            {/* Cadre rectangulaire, format portrait 4/5.
+                Attention en modifiant ces largeurs : elles sont en rem, et
+                1rem vaut 18px au-delà de 1280px (taille de référence fluide
+                réglée dans styles/base.css). Donc 23.5rem ≈ 423px, pas 376. */}
+            <div className="relative aspect-[4/5] w-60 overflow-hidden rounded-lg border border-line bg-surface shadow-lift sm:w-72 md:w-[19rem] lg:w-[23.5rem]">
+              {/* En couleur, avec un léger zoom au survol : une animation
+                  discrète, pas un effet. */}
               <img
                 src={photo}
                 alt={profile.name}
-                className="h-full w-full object-cover grayscale transition-all duration-700 ease-out group-hover:scale-[1.04] group-hover:grayscale-0"
+                className="h-full w-full object-cover transition-transform duration-700 ease-soft group-hover:scale-[1.03]"
               />
             </div>
           </motion.div>

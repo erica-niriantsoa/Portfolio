@@ -1,27 +1,25 @@
 /**
- * Petite étiquette rectangulaire, en petites capitales espacées.
- * Utilisée pour les compétences, les technos d'un projet et les
- * matières d'une formation.
+ * Badge de technologie.
  *
- * Angles droits et fond transparent : dans ce design éditorial, tout
- * est en filets fins, sans pastilles colorées.
+ * En monospace et à angles presque droits (rayon 4px) : ça se lit comme
+ * un identifiant technique, pas comme une pastille décorative. La casse
+ * d'origine est conservée — « PostgreSQL », « Vue.js » — parce que ces
+ * noms s'écrivent ainsi et qu'un recruteur technique le remarque.
  *
- * @param variant  "default" → filet gris, texte foncé
- *                 "accent"  → filet vert, texte vert (technos de projet)
- *                 "dark"    → posée sur un fond sombre
+ * @param variant  "default" → filet gris sur fond clair
+ *                 "accent"  → filet et texte verts (technos d'un projet)
  *
  * Utilisation :   <Tag>Java</Tag>   <Tag variant="accent">Docker</Tag>
  */
 export default function Tag({ children, variant = "default" }) {
   const variants = {
-    default: "border-line text-ink-soft",
-    accent: "border-accent/40 text-accent",
-    dark: "border-white/20 text-white/70",
+    default: "border-line bg-surface text-ink-soft",
+    accent: "border-accent/25 bg-accent-soft text-accent",
   };
 
   return (
     <span
-      className={`border px-2.5 py-1 text-[0.625rem] font-semibold uppercase tracking-[0.12em] ${variants[variant]}`}
+      className={`inline-flex items-center rounded-sm border px-2 py-1 font-mono text-[0.6875rem] font-medium leading-none ${variants[variant]}`}
     >
       {children}
     </span>

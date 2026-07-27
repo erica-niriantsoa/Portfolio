@@ -46,6 +46,11 @@ dist-check
 /erica.html
 /erica_files/
 
+# Captures d'écran déposées à la racine (Win + Maj + S). Celles qui
+# servent au site passent par image/ puis le script d'optimisation.
+/Capture d'écran*.png
+/Capture d'écran*.jpg
+
 # Documents personnels et brouillons.
 #
 # Les motifs commencent par « / » : sans cette barre oblique, Git les

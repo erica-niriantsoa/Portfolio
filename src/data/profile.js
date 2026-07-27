@@ -7,14 +7,11 @@ export const profile = {
   // Logo de la barre de navigation. Affiché en majuscules et suivi d'un
   // point coloré, à la manière d'une signature.
   logo: "Erica",
-  title: "Développeuse",
+  // En français, l'adjectif d'un intitulé de métier ne prend pas de
+  // majuscule : « Développeuse informatique », et non « Informatique ».
+  title: "Développeuse informatique",
   subtitle:
     "Étudiante en 3ème année · Licence Informatique · IT University",
-
-  // Bandeau au-dessus du nom. L'icône qui l'accompagne est choisie dans
-  // sections/Hero.jsx (GraduationCap), pas ici : on ne met pas d'emoji
-  // dans le texte, sinon il ne s'affiche pas pareil selon les appareils.
-  badge: "Recherche de stage · Disponible immédiatement",
 
   // Petite phrase d'accueil, juste au-dessus du grand nom.
   // 👉 Mets une chaîne vide ("") pour la faire disparaître complètement.
@@ -23,8 +20,11 @@ export const profile = {
   // Paragraphe de présentation, affiché sous le grand nom.
   // Écrit à la première personne et sans jargon inutile : c'est la
   // première chose qu'on lit, autant qu'on y entende quelqu'un.
+  //
+  // 👉 Entoure un passage de ** pour l'afficher en gras.
+  //    Ex. : "à **IT University**" → IT University ressort du paragraphe.
   about:
-    "Développeuse et étudiante en 3ème année de Licence en Informatique à IT University, je construis mon expertise à travers des projets concrets en développement web. Rigoureuse, curieuse et passionnée par les solutions numériques, je suis à la recherche d'un stage de fin d'études et serais ravie de rejoindre une équipe dynamique pour contribuer à des projets ambitieux.",
+    "Étudiante en 3ème année de Licence en Informatique à **IT University**, je construis mon expertise à travers des projets concrets en développement web. Rigoureuse, curieuse et passionnée par les solutions numériques, je suis à la recherche d'un stage de fin d'études et serais ravie de rejoindre une équipe dynamique pour contribuer à des projets ambitieux.",
 
   // Citation affichée à côté des chiffres.
   // 👉 Change-la pour une phrase qui te correspond — c'est toi qu'on lit.

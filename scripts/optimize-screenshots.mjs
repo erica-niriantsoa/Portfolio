@@ -55,15 +55,32 @@ const SOURCES = [
   ["VISA/Capture d'écran 2026-07-27 203712.png", "visa-1"],
   ["VISA/Capture d'écran 2026-07-27 203744.png", "visa-2"],
   ["VISA/Capture d'écran 2026-07-27 203756.png", "visa-3"],
+
+  // ── Ce portfolio ──
+  //  Le Profil d'abord (c'est la vitrine), puis les Projets, puis les
+  //  Compétences avec le carrousel de logos.
+  ["portfolio/Capture d'écran 2026-07-28 004750.png", "portfolio-1"],
+  ["portfolio/Capture d'écran 2026-07-28 001330.png", "portfolio-2"],
+  ["portfolio/Capture d'écran 2026-07-28 001359.png", "portfolio-3"],
 ];
 
 const WIDTH = 1280;
 const QUALITY = 78;
 
-// La photo de profil, traitée à part : elle vit dans src/assets/ et
-// s'affiche au maximum en 416px de large. On la sort en 960px, soit un peu
-// plus du double, pour qu'elle reste nette sur les écrans haute densité.
-const PORTRAIT = { from: "src/assets/photo.png", to: "src/assets/photo.webp" };
+// La photo de profil, traitée à part.
+//
+// La source est la version DÉTOURÉE (fond transparent). Elle est d'abord
+// rognée : le détourage laisse de larges bandes transparentes autour du
+// sujet (38 % de l'image ici), qui feraient paraître la silhouette petite
+// et mal placée dans son cadre. `trim()` détecte ces bandes et les coupe.
+//
+// Le WebP conserve la transparence, contrairement au JPEG.
+const PORTRAIT = {
+  from: "image/photo-detouree.png",
+  to: "src/assets/photo.webp",
+};
+// S'affiche au maximum en 423px de large ; 960px pour rester net sur les
+// écrans haute densité.
 const PORTRAIT_WIDTH = 960;
 
 await mkdir(outDir, { recursive: true });
@@ -101,6 +118,8 @@ try {
   const before = (await stat(from)).size;
 
   await sharp(from)
+    // trim() AVANT resize : inutile de redimensionner du vide
+    .trim()
     .resize({ width: PORTRAIT_WIDTH, withoutEnlargement: true })
     .webp({ quality: 82 }) // un peu plus haut : c'est un visage
     .toFile(to);

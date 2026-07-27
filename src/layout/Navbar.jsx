@@ -3,11 +3,6 @@ import { Menu, X } from "lucide-react";
 import { navLinks, navIds, profile } from "../data";
 import useScrolled from "../hooks/useScrolled";
 import useActiveSection from "../hooks/useActiveSection";
-import Button from "../ui/Button";
-
-// « Contact » est sorti de la liste : il devient le bouton plein à droite,
-// comme sur la référence. Le menu mobile, lui, garde toutes les entrées.
-const inlineLinks = navLinks.filter((link) => link.id !== "contact");
 
 // Barre de navigation flottante : un cadre blanc détaché des bords, qui
 // suit le défilement. Les entrées se modifient dans data/navigation.js
@@ -43,29 +38,23 @@ export default function Navbar() {
               ils fonctionnent au clic droit, sont partageables (l'URL
               devient .../#projets) et le défilement animé est déjà géré
               par scroll-behavior dans styles/base.css */}
-          <div className="hidden items-center gap-7 md:flex lg:gap-9">
-            <ul className="flex items-center gap-7 lg:gap-9">
-              {inlineLinks.map((link) => (
-                <li key={link.id}>
-                  <a
-                    href={`#${link.id}`}
-                    aria-current={active === link.id ? "true" : undefined}
-                    className={`mono-label transition-colors duration-300 ease-soft ${
-                      active === link.id
-                        ? "text-accent"
-                        : "text-ink-soft hover:text-ink"
-                    }`}
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-
-            <Button href="#contact" size="sm">
-              Contact
-            </Button>
-          </div>
+          <ul className="hidden items-center gap-7 md:flex lg:gap-9">
+            {navLinks.map((link) => (
+              <li key={link.id}>
+                <a
+                  href={`#${link.id}`}
+                  aria-current={active === link.id ? "true" : undefined}
+                  className={`mono-label transition-colors duration-300 ease-soft ${
+                    active === link.id
+                      ? "text-accent"
+                      : "text-ink-soft hover:text-ink"
+                  }`}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
 
           {/* ── Bouton hamburger (mobile uniquement) ──
               Icônes Lucide plutôt que les caractères ☰ / ✕, dont la taille

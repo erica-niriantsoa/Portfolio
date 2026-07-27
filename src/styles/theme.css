@@ -29,7 +29,11 @@
      garde élégant plutôt que « girly ». */
   --color-accent: #9d4a6a;
   --color-accent-dark: #7d3a54; /* survol des boutons pleins */
-  --color-accent-soft: #fbf0f4; /* fond très clair d'accent */
+  --color-accent-soft: #fbf0f4; /* fond très clair : badges, messages */
+  /* Un cran plus marqué : les aplats de bonne taille, comme le cadre de la
+     photo. Un panneau doit se lire comme un panneau ; à la clarté de
+     accent-soft il se confondrait avec le fond de page. */
+  --color-accent-panel: #f6e6ec;
 
   /* ── Traits ─────────────────────────────────────────────── */
   --color-line: #e8e1e4; /* filets fins, bordures de cartes */

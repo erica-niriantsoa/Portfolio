@@ -21,7 +21,7 @@ export default function Projects() {
         <div className="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between sm:gap-12">
           <SectionHeading
             label="01 — Projets"
-            title="Projets sélectionnés"
+            title="Projets réalisés"
             description="Chacun de ces projets m'a appris quelque chose que les cours seuls ne m'auraient pas appris — du back-end à la cartographie interactive."
           />
           <Reveal delay={0.1}>

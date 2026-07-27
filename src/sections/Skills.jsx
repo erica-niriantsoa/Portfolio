@@ -1,18 +1,32 @@
+import { Check } from "lucide-react";
 import { skills, softSkills, languages, profile } from "../data";
 import SectionHeading from "../ui/SectionHeading";
 import Reveal from "../ui/Reveal";
 import TechMarquee from "../ui/TechMarquee";
 import ProgressBar from "../ui/ProgressBar";
-import Tag from "../ui/Tag";
 import Quote from "../ui/Quote";
 
-// Toutes les technos à plat, puis coupées en deux rangées qui défilent en
-// sens opposés. Calculé une fois au chargement du module, pas à chaque
-// affichage : les données ne changent jamais en cours de route.
-const allTech = skills.flatMap((group) => group.items);
-const middle = Math.ceil(allTech.length / 2);
-const topRow = allTech.slice(0, middle);
-const bottomRow = allTech.slice(middle);
+// Les deux rangées du carrousel portent chacune un sens : la première ce
+// avec quoi Erica construit, la seconde ce avec quoi elle travaille.
+// Le classement se fait par le champ `group` de data/skills.js — avant,
+// la liste était simplement coupée en deux, sans logique.
+// Calculé une fois au chargement du module, pas à chaque affichage :
+// les données ne changent jamais en cours de route.
+const rows = [
+  {
+    label: "Langages & frameworks",
+    items: skills
+      .filter((group) => group.group === "code")
+      .flatMap((group) => group.items),
+  },
+  {
+    label: "Outils & plateformes",
+    items: skills
+      .filter((group) => group.group === "outils")
+      .flatMap((group) => group.items),
+    reverse: true,
+  },
+];
 
 // Section « Compétences ».
 // Le contenu se modifie dans data/skills.js et data/profile.js
@@ -30,9 +44,18 @@ export default function Skills() {
       {/* ══ Carrousel de logos ══
           Hors du conteneur centré : le défilement doit partir d'un bord
           de l'écran et sortir par l'autre. */}
-      <div className="mt-10 flex flex-col gap-3">
-        <TechMarquee items={topRow} duration={42} />
-        <TechMarquee items={bottomRow} duration={38} reverse />
+      <div className="mt-10 flex flex-col gap-6">
+        {rows.map((row) => (
+          <div key={row.label}>
+            {/* L'intitulé reste dans le conteneur centré, la rangée en
+                dessous s'étend d'un bord à l'autre de l'écran. */}
+            <p className="container-page mono-label mb-3 text-ink-faint">
+              {row.label}
+              <span className="ml-2 text-ink-faint/60">{row.items.length}</span>
+            </p>
+            <TechMarquee items={row.items} reverse={row.reverse} />
+          </div>
+        ))}
       </div>
 
       <div className="container-page">
@@ -89,15 +112,30 @@ export default function Skills() {
           </Reveal>
         </div>
 
-        {/* ══ Soft skills ══ */}
+        {/* ══ Soft skills ══
+            En liste et non en badges : ce sont des expressions françaises,
+            pas des noms de technologies. Le monospace des badges est fait
+            pour les identifiants (« PostgreSQL »), il rend une phrase comme
+            « Sens des responsabilités » plus large et moins lisible.
+            Texte à 14px en gras normal au lieu de 11px monospace gris. */}
         <div className="mt-10">
           <h3 className="text-base font-semibold text-ink">Soft skills</h3>
           <Reveal>
-            <div className="mt-5 flex flex-wrap gap-1.5">
+            <ul className="card mt-5 grid gap-x-8 gap-y-4 p-6 sm:grid-cols-2 lg:grid-cols-3">
               {softSkills.map((skill) => (
-                <Tag key={skill}>{skill}</Tag>
+                <li
+                  key={skill}
+                  className="flex items-start gap-2.5 text-sm text-ink"
+                >
+                  <Check
+                    className="mt-0.5 h-3.5 w-3.5 shrink-0 text-accent"
+                    strokeWidth={2.5}
+                    aria-hidden="true"
+                  />
+                  {skill}
+                </li>
               ))}
-            </div>
+            </ul>
           </Reveal>
         </div>
       </div>

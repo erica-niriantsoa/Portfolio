@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Download } from "lucide-react";
+import { ArrowRight, Download, Mail } from "lucide-react";
 import { profile } from "../data";
 import { staggerContainer, fadeUpItem } from "../lib/motion";
 import Button from "../ui/Button";
+import BoldText from "../ui/BoldText";
+import { GithubIcon, LinkedinIcon } from "../ui/Icons";
 // 👉 Pour changer ta photo : remplace src/assets/photo.png, puis relance
 //    node scripts/optimize-screenshots.mjs  (qui régénère le .webp)
 import photo from "../assets/photo.webp";
@@ -50,25 +52,13 @@ export default function Hero() {
         <div className="grid items-center gap-14 md:grid-cols-[1fr_auto] md:gap-10 lg:gap-16">
           {/* Colonne de gauche : tout le texte, aligné au bord gauche */}
           <div className="text-left md:justify-self-start">
-            {/* Badge de disponibilité : point vert qui pulse + texte mono */}
-            <motion.p
-              variants={fadeUpItem}
-              className="mono-label inline-flex items-center gap-2.5 rounded-md border border-line bg-surface px-3 py-1.5 text-ink-soft"
-            >
-              <span className="relative flex h-1.5 w-1.5 shrink-0">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
-              </span>
-              {profile.badge}
-            </motion.p>
-
             {/* Phrase d'accueil, en serif italique pour la distinguer du
                 nom sans lui voler la vedette. Disparaît si le champ
                 `greeting` est vide dans data/profile.js */}
             {profile.greeting && (
               <motion.p
                 variants={fadeUpItem}
-                className="mt-6 font-display text-xl italic text-ink-soft sm:text-2xl"
+                className="font-display text-xl italic text-ink-soft sm:text-2xl"
               >
                 {profile.greeting}
               </motion.p>
@@ -104,7 +94,9 @@ export default function Hero() {
               // 4 lignes. Ne pas reprendre cette largeur pour un texte long.
               className="mt-6 max-w-2xl text-base leading-relaxed text-ink-soft"
             >
-              {profile.about}
+              {/* BoldText met en gras les passages entourés de **
+                  dans data/profile.js */}
+              <BoldText text={profile.about} />
             </motion.p>
 
             <motion.div
@@ -122,6 +114,30 @@ export default function Hero() {
               >
                 Télécharger mon CV
               </Button>
+
+              {/* Réseaux, à la suite des boutons. Icônes seules : les
+                  intitulés seraient redondants avec les logos, connus de
+                  tous — mais chaque lien garde un aria-label pour les
+                  lecteurs d'écran, qui ne « voient » pas le logo. */}
+              <div className="flex items-center justify-center gap-2 sm:ml-1 sm:justify-start">
+                <IconLink
+                  href={profile.socials.github}
+                  label="GitHub"
+                  icon={GithubIcon}
+                  external
+                />
+                <IconLink
+                  href={profile.socials.linkedin}
+                  label="LinkedIn"
+                  icon={LinkedinIcon}
+                  external
+                />
+                <IconLink
+                  href={`mailto:${profile.email}`}
+                  label={`Écrire à ${profile.email}`}
+                  icon={Mail}
+                />
+              </div>
             </motion.div>
           </div>
 
@@ -133,22 +149,48 @@ export default function Hero() {
             variants={fadeUpItem}
             className="group relative mx-auto w-fit md:justify-self-end"
           >
-            {/* Cadre rectangulaire, format portrait 4/5.
+            {/* Cadre rectangulaire, format portrait 4/5, sur un fond rose
+                très pâle : la photo étant détourée, il faut un aplat
+                derrière, sinon la silhouette flotterait dans le vide.
+                Ce rose fait aussi ressortir le blazer sombre.
+
                 Attention en modifiant ces largeurs : elles sont en rem, et
                 1rem vaut 18px au-delà de 1280px (taille de référence fluide
                 réglée dans styles/base.css). Donc 23.5rem ≈ 423px, pas 376. */}
-            <div className="relative aspect-[4/5] w-60 overflow-hidden rounded-lg border border-line bg-surface shadow-lift sm:w-72 md:w-[19rem] lg:w-[23.5rem]">
-              {/* En couleur, avec un léger zoom au survol : une animation
-                  discrète, pas un effet. */}
+            <div className="relative aspect-[4/5] w-60 overflow-hidden rounded-lg border border-line bg-accent-panel shadow-lift sm:w-72 md:w-[19rem] lg:w-[23.5rem]">
+              {/* object-contain et non object-cover : sur une image détourée,
+                  `cover` rognerait la silhouette (une épaule, le haut de la
+                  tête). `contain` l'affiche entière.
+                  object-bottom : elle repose sur le bas du cadre, avec de
+                  l'air au-dessus de la tête — c'est le cadrage naturel d'un
+                  portrait, plutôt qu'une silhouette flottant au milieu. */}
               <img
                 src={photo}
                 alt={profile.name}
-                className="h-full w-full object-cover transition-transform duration-700 ease-soft group-hover:scale-[1.03]"
+                className="h-full w-full object-contain object-bottom transition-transform duration-700 ease-soft group-hover:scale-[1.03]"
               />
             </div>
           </motion.div>
         </div>
       </motion.div>
     </section>
+  );
+}
+
+// Lien vers un réseau : l'icône seule, dans un carré à filet fin de la
+// même hauteur que les boutons voisins, pour que la rangée reste alignée.
+function IconLink({ href, label, icon: Icon, external = false }) {
+  return (
+    <a
+      href={href}
+      // aria-label pour les lecteurs d'écran, title pour l'infobulle au
+      // survol : sans texte visible, il faut les deux.
+      aria-label={label}
+      title={label}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-line bg-white text-ink-soft shadow-soft transition-all duration-300 ease-soft hover:border-line-strong hover:text-accent"
+    >
+      <Icon className="h-4 w-4" />
+    </a>
   );
 }

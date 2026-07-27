@@ -47,11 +47,15 @@ import prestashop3 from "../assets/projects/prestashop-3.webp";
 import visa1 from "../assets/projects/visa-1.webp";
 import visa2 from "../assets/projects/visa-2.webp";
 import visa3 from "../assets/projects/visa-3.webp";
+// Ce portfolio
+import portfolio1 from "../assets/projects/portfolio-1.webp";
+import portfolio2 from "../assets/projects/portfolio-2.webp";
+import portfolio3 from "../assets/projects/portfolio-3.webp";
 
 export const projects = [
     {
     title: "PrestaShop — Boutique e-commerce",
-    period: "2026",
+    period: "Mai 2026",
     description:
       "Installation et configuration complète d'une boutique e-commerce sous PrestaShop : catalogue de 27 produits, catégories, modules de paiement et de livraison, puis suivi des commandes depuis le back-office.",
     tech: ["PHP", "PrestaShop", "MySQL", "Symfony"],
@@ -160,7 +164,7 @@ export const projects = [
   // },
   {
     title: "Front-Office Visa",
-    period: "2025",
+    period: "Avril 2026",
     description:
       "Développement du front-office d'une application web de gestion de visas : interface utilisateur, formulaires et navigation côté client.",
     tech: ["React.js", "JavaScript", "CSS"],
@@ -179,6 +183,7 @@ export const projects = [
     description:
       "Ce site. Conception et développement d'une interface responsive à partir de zéro : architecture par composants, contenu séparé de la présentation, système de design centralisé, animations au défilement et formulaire de contact.",
     tech: ["React", "Vite", "Tailwind CSS", "Framer Motion", "Netlify"],
+    images: [portfolio1, portfolio2, portfolio3],
     links: [
       { label: "Code", url: "https://github.com/erica-niriantsoa/Portfolio" },
       // 👉 Une fois le site en ligne sur Netlify, décommente cette ligne et

@@ -10,6 +10,7 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+dist-check
 *.local
 
 # Editor directories and files
@@ -22,3 +23,38 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# ═══════════════════════════════════════════════════════════════
+#  Fichiers de travail — à ne PAS publier
+# ═══════════════════════════════════════════════════════════════
+
+# Captures d'écran d'origine (~30 Mo). Le site n'en a pas besoin : ce sont
+# les versions converties en WebP, dans src/assets/projects/, qui sont
+# suivies par Git et servies aux visiteurs.
+#
+# ⚠️ CE DOSSIER N'EST DONC PLUS SAUVEGARDÉ PAR GIT.
+#    Copie-le sur Google Drive ou une clé USB : c'est la seule trace de
+#    tes captures d'origine et de ta photo détourée.
+/image/
+
+# Références et inspirations (contient une vidéo de 38 Mo). Un fichier de
+# cette taille entré dans Git y reste pour toujours : l'historique ne
+# s'allège jamais, même si on supprime le fichier ensuite.
+/ando/
+
+# Page web enregistrée pour consultation
+/erica.html
+/erica_files/
+
+# Documents personnels et brouillons.
+#
+# Les motifs commencent par « / » : sans cette barre oblique, Git les
+# appliquerait à TOUS les niveaux, et « photo.png » masquerait aussi
+# src/assets/photo.png — la photo d'origine qu'on garde en archive.
+#
+# Le CV publié, lui, est dans public/ et reste suivi.
+/BRED_CV.pdf
+/photo.png
+/prompt.txt
+/.txt
+/92093ee69c7ffa47399508c39b3d8eff.jpg

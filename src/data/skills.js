@@ -46,9 +46,14 @@ import { Palette, Server, Database, Wrench, Map, Image } from "lucide-react";
 //      • Oracle   → aucun logo libre : icône « base de données » au trait.
 //      • Photoshop→ aucun logo libre : icône « image » au trait.
 
+// `group` décide de la rangée du carrousel où la catégorie apparaît :
+//   "code"   → ce avec quoi je construis (langages, frameworks, bases)
+//   "outils" → ce avec quoi je travaille (versionnage, conteneurs, design)
+// Pour déplacer une catégorie d'une rangée à l'autre, change ce seul mot.
 export const skills = [
   {
     category: "Frontend",
+    group: "code",
     icon: Palette,
     items: [
       { name: "HTML5", icon: siHtml5 },
@@ -60,6 +65,7 @@ export const skills = [
   },
   {
     category: "Backend",
+    group: "code",
     icon: Server,
     items: [
       { name: "Java", icon: siOpenjdk },
@@ -69,6 +75,7 @@ export const skills = [
   },
   {
     category: "Base de données",
+    group: "code",
     icon: Database,
     items: [
       { name: "PostgreSQL", icon: siPostgresql },
@@ -79,6 +86,7 @@ export const skills = [
   },
   {
     category: "Outils",
+    group: "outils",
     icon: Wrench,
     items: [
       { name: "Git", icon: siGit },
@@ -92,6 +100,8 @@ export const skills = [
   },
   {
     category: "Cartographie",
+    // Leaflet est une bibliothèque qu'on code, d'où "code" et non "outils"
+    group: "code",
     icon: Map,
     items: [
       { name: "Leaflet", icon: siLeaflet },

@@ -42,9 +42,18 @@ export default function Education() {
                 <h3 className="mt-5 text-base font-semibold leading-snug text-ink">
                   {step.degree}
                 </h3>
-                <p className="mt-2 flex-1 text-sm text-ink-soft">
-                  {step.school}
-                </p>
+
+                {/* L'établissement est facultatif. On teste sa présence
+                    plutôt que d'afficher un paragraphe vide, qui laisserait
+                    un trou dans la carte. flex-1 passe alors au titre pour
+                    que les cartes gardent la même hauteur. */}
+                {step.school ? (
+                  <p className="mt-2 flex-1 text-sm text-ink-soft">
+                    {step.school}
+                  </p>
+                ) : (
+                  <div className="flex-1" />
+                )}
 
                 {/* Les matières, seulement si la liste n'est pas vide */}
                 {step.details.length > 0 && (

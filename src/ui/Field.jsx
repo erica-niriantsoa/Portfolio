@@ -10,7 +10,9 @@
  * @param name         nom du champ — c'est lui qui apparaîtra dans le
  *                     message reçu, donc il doit rester stable
  * @param type         type HTML : text, email, tel…
- * @param required     true → le navigateur refuse l'envoi si c'est vide
+ * @param required     true → le navigateur refuse l'envoi si c'est vide.
+ *                     Les champs SANS cette option portent la mention
+ *                     « (facultatif) » à côté de leur libellé.
  * @param textarea     true → zone de texte multiligne
  * @param placeholder  texte grisé d'exemple
  */
@@ -34,10 +36,17 @@ export default function Field({
     <div>
       <label htmlFor={id} className="mono-label text-ink-soft">
         {label}
-        {required && (
-          <span className="text-accent" aria-hidden="true">
-            {" "}
-            *
+        {/* On signale les champs FACULTATIFS, et non les obligatoires.
+            Deux raisons :
+            · un astérisque coloré à côté d'un libellé se lit comme un
+              message d'erreur, alors que rien n'a encore été saisi ;
+            · la plupart des champs étant obligatoires, marquer les
+              exceptions fait beaucoup moins de bruit visuel.
+            La validation, elle, reste assurée par l'attribut `required`
+            du champ lui-même. */}
+        {!required && (
+          <span className="ml-1.5 font-normal normal-case tracking-normal text-[0.6875rem] text-ink-faint">
+            (facultatif)
           </span>
         )}
       </label>

@@ -51,6 +51,16 @@ dist-check
 /Capture d'écran*.png
 /Capture d'écran*.jpg
 
+# Dossiers de candidature : lettres de motivation, lettre d'introduction
+# de l'établissement, copies de travail du CV.
+# Le SEUL document publié est public/CV-Niriantsoa-Erica.pdf — tout ce qui
+# se trouve dans public/ est servi à n'importe quel visiteur et indexé par
+# les moteurs de recherche, même sans lien vers le fichier.
+/lm.pdf
+/LM*.pdf
+/Lettre*.pdf
+/CV-*.pdf
+
 # Documents personnels et brouillons.
 #
 # Les motifs commencent par « / » : sans cette barre oblique, Git les

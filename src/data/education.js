@@ -8,7 +8,7 @@ export const education = [
   {
     // « (en cours) » retiré : la période juste à côté dit déjà « présent ».
     degree: "Licence en Informatique — Développement Java",
-    school: "IT University, Antananarivo",
+    school: "IT University, Andoharanofotsy Antananarivo",
     period: "2023 – présent",
     // Volontairement vide. Les matières listées ici (Java, Spring Boot,
     // PostgreSQL, Docker, Git…) étaient exactement les technos déjà

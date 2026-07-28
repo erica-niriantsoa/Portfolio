@@ -25,7 +25,10 @@ export default function Hero() {
       // pb plus faible sur mobile : en pleine hauteur d'écran avec les
       // colonnes empilées, 8rem de marge basse laissaient une grande
       // bande blanche entre la photo et la section suivante.
-      className="min-h-screen-safe flex items-center pb-16 pt-28 sm:pb-24 lg:pb-32"
+      // pt-24 sur mobile : la barre de navigation flottante fait ~62px de
+      // haut, 96px de marge suffisent donc largement. Les 112px précédents
+      // repoussaient les boutons hors du premier écran sur un petit iPhone.
+      className="min-h-screen-safe flex items-center pb-16 pt-24 sm:pb-24 sm:pt-28 lg:pb-32"
     >
       <motion.div
         variants={staggerContainer}

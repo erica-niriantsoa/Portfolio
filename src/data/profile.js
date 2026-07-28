@@ -24,7 +24,7 @@ export const profile = {
   // 👉 Entoure un passage de ** pour l'afficher en gras.
   //    Ex. : "à **IT University**" → IT University ressort du paragraphe.
   about:
-    "Étudiante en 3ème année de Licence en Informatique à **IT University Andoharanofotsy**, je construis mon expertise à travers des projets concrets en développement web. Rigoureuse, curieuse et passionnée par les solutions numériques, je suis à la recherche d'un stage de fin d'études, disponible immédiatement.",
+    "Étudiante en 3ème année de Licence en Informatique à **IT University Andoharanofotsy**, je construis mon expertise à travers des projets concrets en développement web. Rigoureuse, curieuse et passionnée par les solutions numériques, je suis à la recherche d'un **stage de fin d'études**, disponible immédiatement.",
 
   // Citation affichée à côté des chiffres.
   // 👉 Change-la pour une phrase qui te correspond — c'est toi qu'on lit.

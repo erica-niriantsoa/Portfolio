@@ -38,7 +38,13 @@ export const profile = {
   location: "Ambatofotsy, Antananarivo",
 
   // Lien vers ton CV : le PDF doit être dans /public
-  cvUrl: "/CV-Erica-Niriantsoa.pdf",
+  // ⚠️ Doit correspondre EXACTEMENT au nom du fichier dans public/.
+  //    Si tu remplaces ton CV, garde le même nom de fichier — sinon le
+  //    lien renvoie une erreur 404 et rien ne se télécharge, sans aucun
+  //    message d'erreur visible.
+  //    Évite les espaces et les accents : dans une URL, une espace doit
+  //    être encodée en %20, et tous les outils ne le font pas.
+  cvUrl: "/CV-Niriantsoa-Erica.pdf",
 
   socials: {
     github: "https://github.com/erica-niriantsoa",
